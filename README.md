@@ -7,7 +7,7 @@ Two people, each does one pass of running Python scripts and sending out things,
 
 ## specifications_
 
-This is an implementation based on the _Partially Homomorphic Encryption_ called **Paillier Encryption**.
+This is an implementation based on the _Partially Homomorphic Encryption_ called **Paillier Cryptosystem**.
 
 The hashes are done with SHA3-512 just to be on the safe side.
 
