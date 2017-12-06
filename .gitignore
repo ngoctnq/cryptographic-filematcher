@@ -1,3 +1,4 @@
 *
 !*.py
 test.py
+!README.md

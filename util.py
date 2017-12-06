@@ -1,22 +1,18 @@
 #!/usr/bin/env python3
 '''
 	Cryptographic Filematcher
-	@ author Ngoc Tran (ngoc@underlandian.com)
+	Ngoc Tran (ngoc@underlandian.com)
 
 	Hash the files with SHA3-512 for maximum security and fixed-size digest.
-	Very big prime for El Gamal use of 128-bit length, close to the digest's.
+	Encrypted using an imported PHE (Partially Homomorphic Encryption) module.
 '''
-
 import hashlib
 import sys
 import os
 import shutil
 import sys
 import itertools
-
-# CONSTANT, COPIED DIRECTLY FROM
-# https://langui.sh/2009/03/07/generating-very-large-primes/
-BIG_ASS_PRIME = 7337488745629403488410174275830423641502142554560856136484326749638755396267050319392266204256751706077766067020335998122952792559058552724477442839630133
+from phe import paillier
 
 def update_progress(name, progress):
 	'''
@@ -60,9 +56,7 @@ def get_digest(filenames):
 		# actually hash the file content
 		m.update(f.read())
 		# and add the hash to a dictionary with the key being filename
-		hashes[os.path.abspath(filenames[i])] = int(m.hexdigest(), 16) % BIG_ASS_PRIME
-	if is_not_good(hashes):
-		print('Fatal error! Hash/mod collision and/or hash returns 0. Quitting...')
+		hashes[os.path.abspath(filenames[i])] = int(m.hexdigest(), 16)
 	return hashes
 
 def get_coeffs(roots):
@@ -81,37 +75,18 @@ def get_coeffs(roots):
 			prod_k = 1
 			for elem in roots_k:
 				prod_k *= elem
-				prod_k %= BIG_ASS_PRIME
 			prod_k *= (-1) ** len(roots_k)
 			counter += 1
 			update_progress('Getting coeffs', counter / 2 ** (len(ret)-1))
 			ret[k] += prod_k
-			ret[k] %= BIG_ASS_PRIME
 	return ret
 
-def poly_eval(coeffs, x):
+def poly_eval_paillier(pubkey, coeffs, x):
 	'''
 	Apply Horner's rule for fast polynomial evaluation.
 	'''
-	ret = 0
+	ret = pubkey.encrypt(0)
 	for i in coeffs:
-		ret *= x
-		ret %= BIG_ASS_PRIME
-		ret += i
-		ret %= BIG_ASS_PRIME
+		ret = ret * x
+		ret = ret + i
 	return ret
-
-def is_not_good(dictionary):
-	'''
-	Check if the values in the dictionary has duplicates.
-	'''
-	to_check = list(dictionary.values())
-	ret = False
-	while len(to_check) > 0:
-		t = to_check.pop()
-		if t in to_check:
-			ret = True
-		if t == 0:
-			ret = True
-	return ret
-

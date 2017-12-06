@@ -1,33 +1,35 @@
 #!/usr/bin/env python3
 '''
 	Cryptographic Filematcher
-	@ author Ngoc Tran (ngoc@underlandian.com)
+	Ngoc Tran (ngoc@underlandian.com)
 
 	Hash the files with SHA3-512 for maximum security and fixed-size digest.
-	Very big prime for El Gamal use of 128-bit length, close to the digest's.
+	Encrypted using an imported PHE (Partially Homomorphic Encryption) module.
 '''
-
+from phe import paillier
 import pickle, secrets
 
 print('cryptographic filematcher (ngoc@underlandian.com)')
 print('This will ask you for the hash file saved before,')
 print('\tand the digest file from the other party.')
 # get the coefficients
-fn = input('\nHash file saved before (default: ./FILES): ')
+fn = input('\nPrivate key file saved before (default: ./KEY): ')
 if fn == '':
-	fn = 'FILES'
-f = open(fn, 'rb')
-hashes = pickle.load(f)
+	fn = 'KEY'
+privkey, hashes = pickle.load(open(fn, 'rb'))
 # get the coefficients
 fn = input('Digest file from the other party (default: ./DIGEST): ')
 if fn == '':
 	fn = 'DIGEST'
-f = open(fn)
-digest = []
-for line in f:
-	digest.append(int(line.strip(), 16))
+digest = pickle.load(open(fn, 'rb'))
+digest = [privkey.decrypt(x) for x in digest]
+
 # compare the digests
+matched = False
 for hash1 in digest:
 	for key in hashes:
 		if secrets.compare_digest(hex(hash1), hex(hashes[key])):
 			print('File', key, 'matched!')
+			matched = True
+if not matched:
+	print('Nothing matched.')
