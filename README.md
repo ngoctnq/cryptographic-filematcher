@@ -68,7 +68,7 @@ One simple way that would speed this up is to revert back to SHA-2 since it oper
 
 ## lessons_
 
-I implemented a horrible version of this protocol before importing the `phe` module, so a lesson relearnt: *__never implement any crypto primitives by yourself__* - I believe I heard this from Dan Boneh in one of his lectures. I also started this the Tuesday night before the exam, so lesson *numer zwei*: *__start early. find teammates. plot out plans. do things the organized way. don't kill yourself over a possible bonus 10% in grade of class that is required for qual exam.__*
+I implemented a horrible version of this protocol before importing the `phe` module, so a lesson relearnt: *__never (re)implement any crypto primitives by yourself__* - I believe I heard this from Dan Boneh in one of his lectures. I also started this the Tuesday night before the exam, so lesson *numer zwei*: *__start early. find teammates. plot out plans. do things the organized way. don't kill yourself over a possible bonus 10% in grade of class that is required for qual exam.__*
 
 ## citations_
 
