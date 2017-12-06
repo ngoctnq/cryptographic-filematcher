@@ -19,7 +19,7 @@ The hashes are done with SHA3-512 just to be on the safe side.
 
 <sub>_Note 1:_ Installation of `python-paillier` on Ubuntu or such distros requires some more dependencies: `libmpc-dev`, `libmpfr-dev`, `libmpfr4`, `libgmp3-dev` for high-precision computations. <sup id="a1">[[1]](#f1)</sup></sub>
 
-<sub>_Note 2:_ We assume that you already know how to sign and verify a file. At least, please publish your public key, and then follow this beginner-friendly guide. <sup id="a2">[[2]](#f2)</sup></sub>
+<sub>_Note 2:_ We assume that you already know how to sign and verify a file. At the very least, please publish your public key, and then follow this beginner-friendly guide. <sup id="a2">[[2]](#f2)</sup></sub>
 
 ## protocol_
 
@@ -80,4 +80,4 @@ I implemented a horrible version of this protocol before importing the `phe` mod
 
 <sup id="f4">[[4]](#a4)</sup> The source code with the author's disclaimer can be found here: [python-paillier](https://github.com/n1analytics/python-paillier)
 
-<sup id="f5">[[5]](#a5)</sup>The Cryptography StackExchange thread can be found here: [Is there an algorithm to find the number of intersections of two sets?](https://crypto.stackexchange.com/a/454).
+<sup id="f5">[[5]](#a5)</sup> The Cryptography StackExchange thread can be found here: [Is there an algorithm to find the number of intersections of two sets?](https://crypto.stackexchange.com/a/454).
